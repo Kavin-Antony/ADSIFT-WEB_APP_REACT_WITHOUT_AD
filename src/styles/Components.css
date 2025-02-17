@@ -1,0 +1,26 @@
+.audio-player {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.audio-player button {
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.audio-player button:focus {
+  outline: 2px solid white; /* White outline */
+}
+
+@media (max-width: 768px) {
+  .audio-player {
+    padding: 15px;
+  }
+}

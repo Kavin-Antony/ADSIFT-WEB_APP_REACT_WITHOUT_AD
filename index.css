@@ -1,0 +1,8 @@
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #000000 25%, rgba(0, 0, 0, 0.9) 25%, rgba(61, 61, 61, 0.2) 85%),
+              radial-gradient(circle at center, rgba(255, 0, 0, 0.2) 10%, rgba(129, 129, 129, 0.1) 50%, transparent 80%);
+  background-color: #000; /* Fallback */
+}

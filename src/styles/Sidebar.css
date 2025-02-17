@@ -1,0 +1,124 @@
+.sidebar {
+  height: 100vh;
+  background-color: black;
+  padding-top: 20px;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: width 0.2s ease-in-out;
+}
+
+.sidebar button:focus {
+  outline: 2px solid white; /* White outline */
+}
+.sidebar.closed {
+  width: 60px;
+}
+
+.sidebar.open {
+  width: 210px;
+}
+
+/* Logo Section */
+.logo-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+  transition: width 0.2s ease-in-out;
+}
+
+.sidebar.open .logo {
+  width: 180px;
+}
+
+/* ADSIFT Text */
+.adsift-text {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+  color: rgb(255, 255, 255);
+  transition: font-size 0.3s ease-in-out;
+}
+
+.sidebar.open .adsift-text {
+  font-size: 50px;
+}
+
+/* Menu Items */
+.menu-items {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Sidebar Buttons */
+.sidebar-btn,
+.sign-in-btn {
+  width: 60px;
+  max-width: 200px;
+  padding: 10px;
+  margin: 10px auto;
+  background-color: #000000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease, width 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sidebar-btn span,
+.sign-in-btn span {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.sidebar.open .sidebar-btn,
+.sidebar.open .sign-in-btn {
+  width: 85%;
+  justify-content: flex-start;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.sidebar.open .sidebar-btn span,
+.sidebar.open .sign-in-btn span {
+  opacity: 1;
+}
+
+.sidebar-btn:hover {
+  background-color: #1c1c1c;
+}
+
+/* Sign-In Button */
+.sign-in-btn {
+  background-color: red;
+  font-size: 18px;
+}
+
+.sign-in-btn:hover {
+  background-color: darkred;
+}

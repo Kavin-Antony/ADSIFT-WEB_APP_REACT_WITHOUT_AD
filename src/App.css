@@ -1,0 +1,91 @@
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.audio-player-container {
+  width: 100%;
+  background: #000000 transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  gap: 10px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: #333;
+  color: white;
+  padding: 15px;
+}
+
+.main-content {
+  flex: 2;
+  margin-left: 75px;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar.open ~ .main-content {
+  margin-left: 230px;
+}
+
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .content-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex: none; /* Don't take too much space on small screens */
+  }
+
+  .main-content {
+    width: 100%;
+    margin-left: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .audio-player-container {
+    padding: 10px;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar, .main-content {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .audio-player-container {
+    padding: 5px;
+  }
+}

@@ -1,0 +1,25 @@
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 10px;
+  padding-left: 15px;
+  margin: 5px 0;
+}
+  .categories button:focus {
+    outline: 2px solid white; /* White outline */
+  }
+  .categories button {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    flex: auto;
+  }
+  
+  .categories button:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
