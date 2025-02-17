@@ -1,14 +1,15 @@
 import { useRef, useState, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, SkipBack, SkipForward, Repeat, Shuffle } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, SkipBack, SkipForward } from 'lucide-react';
 import '../styles/AudioPlayer.css';
 
 const songs = {
-  song: ["Leo - Anbenum.aac", "Hey-Amigo.mp3", "kesariya.mp3"],
-  images: ["Leo.avif", "hey.jpg", "kesarya-pic.jpg"],
+  song: ["https://listen.openstream.co/4428/audio", "https://prclive1.listenon.in/", "https://www.liveradio.es/http://radios.crabdance.com:8002/1", "https://radios.crabdance.com:8002/2"],
+  images: ["hfm.png", "rcfm.png", "rmfm.png","sfm.png"],
   song_name: [
-    "Anbenum (From 'Leo') by Anirudh Ravichander, Lothika",
-    "Hey Amigo (From 'Kaappaan') Blaaze, Jonita Gandhi",
-    "Kesariya (From 'Bramastra') Pritam, Arijit Singh, Amitabh Bhattacharya"
+    "Hello FM 106.4",
+    "Radio City 91.1",
+    "Radio Mirchi 98.3",
+    "Suriyan FM 93.5"
   ]
 };
 
@@ -24,8 +25,14 @@ const AudioPlayer = () => {
   useEffect(() => {
     const audio = audioRef.current;
     if (audio) {
-      audio.addEventListener('timeupdate', () => setCurrentTime(audio.currentTime));
-      audio.addEventListener('loadedmetadata', () => setDuration(audio.duration));
+      const updateTime = () => setCurrentTime(audio.currentTime);
+      const setMetadata = () => setDuration(audio.duration);
+      audio.addEventListener('timeupdate', updateTime);
+      audio.addEventListener('loadedmetadata', setMetadata);
+      return () => {
+        audio.removeEventListener('timeupdate', updateTime);
+        audio.removeEventListener('loadedmetadata', setMetadata);
+      };
     }
   }, []);
 
@@ -89,9 +96,6 @@ const AudioPlayer = () => {
         <audio ref={audioRef} src={songs.song[currentIndex]}></audio>
 
         <div className="controls">
-          <button className="control-btn">
-            <Shuffle size={18} />
-          </button>
           <button onClick={prevSong} className="control-btn">
             <SkipBack size={22} />
           </button>
@@ -100,9 +104,6 @@ const AudioPlayer = () => {
           </button>
           <button onClick={nextSong} className="control-btn">
             <SkipForward size={22} />
-          </button>
-          <button className="control-btn">
-            <Repeat size={18} />
           </button>
         </div>
 
