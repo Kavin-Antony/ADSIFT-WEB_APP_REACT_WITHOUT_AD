@@ -3,13 +3,14 @@ import { Play, Pause, Volume2, VolumeX, SkipBack, SkipForward } from 'lucide-rea
 import '../styles/AudioPlayer.css';
 
 const songs = {
-  song: ["https://listen.openstream.co/4428/audio", "https://prclive1.listenon.in/", "https://www.liveradio.es/http://radios.crabdance.com:8002/1", "https://radios.crabdance.com:8002/2"],
-  images: ["hfm.png", "rcfm.png", "rmfm.png","sfm.png"],
+  song: ["https://listen.openstream.co/4428/audio", "https://prclive1.listenon.in/", "https://www.liveradio.es/http://radios.crabdance.com:8002/1", "https://radios.crabdance.com:8002/2","https://www.liveradio.es/http://radios.crabdance.com:8002/4"],
+  images: ["hfm.png", "rcfm.png", "rmfm.png","sfm.png","bigfm.png"],
   song_name: [
     "Hello FM 106.4",
     "Radio City 91.1",
     "Radio Mirchi 98.3",
-    "Suriyan FM 93.5"
+    "Suriyan FM 93.5",
+    "Big FM 92.7"
   ]
 };
 
