@@ -3,8 +3,14 @@ import { Play, Pause, Volume2, VolumeX, SkipBack, SkipForward } from 'lucide-rea
 import '../styles/AudioPlayer.css';
 
 const songs = {
-  song: ["https://listen.openstream.co/4428/audio", "https://prclive1.listenon.in/", "https://www.liveradio.es/http://radios.crabdance.com:8002/1", "https://radios.crabdance.com:8002/2","https://www.liveradio.es/http://radios.crabdance.com:8002/4"],
-  images: ["hfm.png", "rcfm.png", "rmfm.png","sfm.png","bigfm.png"],
+  song: [
+    "https://listen.openstream.co/4428/audio",
+    "https://prclive1.listenon.in/",
+    "https://www.liveradio.es/http://radios.crabdance.com:8002/1",
+    "https://radios.crabdance.com:8002/2",
+    "https://www.liveradio.es/http://radios.crabdance.com:8002/4"
+  ],
+  images: ["hfm.png", "rcfm.png", "rmfm.png", "sfm.png", "bigfm.png"],
   song_name: [
     "Hello FM 106.4",
     "Radio City 91.1",
@@ -15,75 +21,97 @@ const songs = {
 };
 
 const AudioPlayer = () => {
-  const audioRef = useRef(null);
+  const audioRefs = useRef([]);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const audio = audioRef.current;
-    if (audio) {
-      const updateTime = () => setCurrentTime(audio.currentTime);
-      const setMetadata = () => setDuration(audio.duration);
-      audio.addEventListener('timeupdate', updateTime);
-      audio.addEventListener('loadedmetadata', setMetadata);
-      return () => {
-        audio.removeEventListener('timeupdate', updateTime);
-        audio.removeEventListener('loadedmetadata', setMetadata);
-      };
-    }
+    audioRefs.current = songs.song.map((url, index) => {
+      const audio = new Audio(url);
+      audio.volume = volume;
+      audio.muted = isMuted;
+      audio.onplay = () => setIsPlaying(true);
+      audio.onpause = () => setIsPlaying(false);
+      return audio;
+    });
+
+    return () => {
+      audioRefs.current.forEach((audio) => {
+        audio.pause();
+        audio.src = "";
+        audio.onplay = null;
+        audio.onpause = null;
+      });
+    };
   }, []);
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.src = songs.song[currentIndex];
-      if (isPlaying) {
-        audioRef.current.play();
+    audioRefs.current.forEach((audio) => {
+      audio.volume = volume;
+      audio.muted = isMuted;
+    });
+  }, [volume, isMuted]);
+
+  useEffect(() => {
+    const currentAudio = audioRefs.current[currentIndex];
+    audioRefs.current.forEach((audio, index) => {
+      if (index === currentIndex) {
+        if (isPlaying) {
+          currentAudio.play().catch((error) => {
+            console.error("Failed to play audio:", error);
+            setIsPlaying(false); // Fallback to pause state if play fails
+          });
+        }
+      } else {
+        audio.pause();
       }
-    }
-  }, [currentIndex]);
+    });
+  }, [currentIndex, isPlaying]);
 
   const togglePlay = () => {
+    const currentAudio = audioRefs.current[currentIndex];
     if (isPlaying) {
-      audioRef.current.pause();
+      currentAudio.pause();
     } else {
-      audioRef.current.play();
+      currentAudio.play().catch((error) => {
+        console.error("Failed to play audio:", error);
+        setIsPlaying(false); // Fallback to pause state if play fails
+      });
     }
-    setIsPlaying(!isPlaying);
   };
 
-  const handleSeek = (e) => {
-    audioRef.current.currentTime = e.target.value;
-    setCurrentTime(e.target.value);
-  };
-
-  const handleVolumeChange = (e) => {
-    const newVolume = e.target.value;
-    audioRef.current.volume = newVolume;
-    setVolume(newVolume);
-    setIsMuted(newVolume === "0");
-  };
-
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
-    audioRef.current.muted = !audioRef.current.muted;
+  const changeSong = (newIndex) => {
+    audioRefs.current[currentIndex].pause();
+    setCurrentIndex(newIndex);
+    setIsPlaying(true);
+    audioRefs.current[newIndex].play().catch((error) => {
+      console.error("Failed to play audio:", error);
+      setIsPlaying(false); // Fallback to pause state if play fails
+    });
   };
 
   const nextSong = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % songs.song.length);
+    const newIndex = (currentIndex + 1) % songs.song.length;
+    changeSong(newIndex);
   };
 
   const prevSong = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + songs.song.length) % songs.song.length);
+    const newIndex = (currentIndex - 1 + songs.song.length) % songs.song.length;
+    changeSong(newIndex);
   };
 
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  const toggleMute = () => {
+    const newMuted = !isMuted;
+    setIsMuted(newMuted);
+    setVolume(newMuted ? 0 : 1); // Set volume to 0 when muted, restore to 1 when unmuted
+  };
+
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    setIsMuted(newVolume === 0); // Mute if volume is 0
   };
 
   return (
@@ -94,8 +122,6 @@ const AudioPlayer = () => {
       </div>
 
       <div className="audio-player">
-        <audio ref={audioRef} src={songs.song[currentIndex]}></audio>
-
         <div className="controls">
           <button onClick={prevSong} className="control-btn">
             <SkipBack size={22} />
@@ -108,17 +134,19 @@ const AudioPlayer = () => {
           </button>
         </div>
 
-        <div className="progress-container">
-          <span>{formatTime(currentTime)}</span>
-          <input type="range" min="0" max={duration} value={currentTime} onChange={handleSeek} className="progress-bar" />
-          <span>{formatTime(duration)}</span>
-        </div>
-
         <div className="volume-container">
           <button onClick={toggleMute} className="volume-btn">
-            {isMuted || volume === "0" ? <VolumeX size={20} /> : <Volume2 size={20} />}
+            {isMuted || volume === 0 ? <VolumeX size={20} /> : <Volume2 size={20} />}
           </button>
-          <input type="range" min="0" max="1" step="0.1" value={volume} onChange={handleVolumeChange} className="volume-slider" />
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={handleVolumeChange}
+            className="volume-slider"
+          />
         </div>
       </div>
     </div>
