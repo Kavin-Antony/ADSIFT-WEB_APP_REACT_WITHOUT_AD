@@ -110,6 +110,7 @@
 }
 
 .sidebar-btn:hover {
+  outline: 2px solid white;
   background-color: #1c1c1c;
 }
 
@@ -120,5 +121,6 @@
 }
 
 .sign-in-btn:hover {
+  outline: 2px solid white;
   background-color: darkred;
 }

@@ -18,6 +18,10 @@
   cursor: text;
 }
 
+.search-container:hover{
+  outline: 2px solid white;
+}
+
 .search-container:focus-within {
   background: rgb(76, 76, 76);
 }
