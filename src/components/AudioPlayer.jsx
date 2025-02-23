@@ -5,10 +5,10 @@ import '../styles/AudioPlayer.css';
 const songs = {
   song: [
     "https://listen.openstream.co/4428/audio",
-    "https://prclive1.listenon.in/",
+    "https://radios.crabdance.com:8002/5",
     "https://www.liveradio.es/http://radios.crabdance.com:8002/1",
     "https://radios.crabdance.com:8002/2",
-    "https://www.liveradio.es/http://radios.crabdance.com:8002/4"
+    "https://radios.crabdance.com:8002/4"
   ],
   images: ["hfm.png", "rcfm.png", "rmfm.png", "sfm.png", "bigfm.png"],
   song_name: [
