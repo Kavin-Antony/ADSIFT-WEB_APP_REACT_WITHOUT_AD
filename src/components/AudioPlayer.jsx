@@ -3,6 +3,7 @@ import { Play, Pause, Volume2, VolumeX, SkipBack, SkipForward } from "lucide-rea
 import "../styles/AudioPlayer.css";
 
 const songs = {
+  id : [1,2,3,4,5],
   song: [
     "https://listen.openstream.co/4428/audio",
     "https://radios.crabdance.com:8002/5",
