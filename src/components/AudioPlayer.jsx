@@ -7,7 +7,7 @@ const songs = {
   song: [
     "https://listen.openstream.co/4428/audio",
     "https://radios.crabdance.com:8002/5",
-    "https://www.liveradio.es/http://radios.crabdance.com:8002/1",
+    "http://radios.crabdance.com:8002/1",
     "https://radios.crabdance.com:8002/2",
     "https://radios.crabdance.com:8002/4"
   ],
