@@ -21,29 +21,40 @@ const songs = {
   ]
 };
 
+const NUM_BARS = 20; // number of visualizer bars
+
 const AudioPlayer = () => {
   const audioRefs = useRef([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [volume, setVolume] = useState(1);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [started, setStarted] = useState(false);
 
-  useEffect(() => {
+  const initializeAudios = () => {
     audioRefs.current = songs.song.map((url, index) => {
       const audio = new Audio(url);
       audio.loop = true;
-      audio.play().catch((error) => console.error("Audio play error:", error));
-      audio.muted = index !== currentIndex;
+      audio.muted = index !== currentIndex || isMuted;
       audio.volume = volume;
       return audio;
     });
+    // Play all audios (only the active one is unmuted)
+    audioRefs.current.forEach(audio => {
+      audio.play().catch((error) => console.error("Audio play error:", error));
+    });
+  };
 
+  useEffect(() => {
+    if (started) {
+      initializeAudios();
+    }
     return () => {
       audioRefs.current.forEach((audio) => {
         audio.pause();
         audio.src = "";
       });
     };
-  }, []);
+  }, [started]);
 
   useEffect(() => {
     audioRefs.current.forEach((audio, index) => {
@@ -74,6 +85,31 @@ const AudioPlayer = () => {
     setVolume(parseFloat(e.target.value));
   };
 
+  const handleStart = () => {
+    setStarted(true);
+  };
+
+  // Create an array for visualizer bars with randomized maximum heights and animation delays.
+  const visualizerBars = Array.from({ length: NUM_BARS }, (_, index) => {
+    const animationDelay = Math.random() * 2; // random delay up to 2s
+    // randomized max height between 50px and 150px, while min height is fixed (say 20px)
+    const maxHeight = 20 + Math.random() * 65;
+    return { animationDelay, maxHeight, key: index };
+  });
+
+  if (!started) {
+    return (
+      <div className="start-screen" onClick={handleStart} style={{cursor: "pointer"}}>
+        <div className="adsift-container">
+          <h1 className="adsift-title">ADSIFT</h1>
+          <div className="big-play-icon">
+            <Play size={200} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="audio-player-wrapper">
       <div className="song-info">
@@ -92,6 +128,22 @@ const AudioPlayer = () => {
           <button onClick={nextStation} className="control-btn">
             <SkipForward size={22} />
           </button>
+        </div>
+
+        <div className="visualizer-container">
+          <div className="visualizer">
+            {visualizerBars.map((bar) => (
+              <div 
+                key={bar.key} 
+                className="visualizer-bar" 
+                style={{
+                  animationDelay: `${bar.animationDelay}s`,
+                  // Pass max height as a CSS variable so the keyframes can use it.
+                  "--max-height": `${bar.maxHeight}px`
+                }}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="volume-container">

@@ -147,3 +147,66 @@
 button:focus, input:focus {
   outline: none;
 }
+
+.adsift-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.adsift-title {
+  font-size: 100px;
+  margin-bottom: 50px;
+}
+
+.big-play-icon {
+  font-size: 100px;
+  color: white;
+}
+.audio-player-wrapper {
+  font-family: Arial, sans-serif;
+}
+
+/* Visualizer container and its content */
+.visualizer-container {
+  width: 100%;
+  height: 60px;
+  margin: 5px 0;
+  display: flex;
+  align-items: flex-end; /* Anchor bars at bottom */
+  justify-content: center;
+  overflow: hidden;
+}
+
+.visualizer {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end; /* Ensure bars grow upward */
+}
+
+.visualizer-bar {
+  width: 8px;
+  /* A gradient that goes from a solid color to transparent. 
+     You can adjust the color stops to achieve the desired shade. */
+  background: linear-gradient(to top, red 50%, rgba(255, 255, 255, 0.1) 100%);
+  /* Start at a fixed minimum height */
+  height: 20px;
+  /* Animate the height property */
+  animation: growUp 1.5s ease-in-out infinite;
+  /* Optional: for smoother edges, you can add a border-radius */
+  border-radius: 2px;
+}
+
+/* Keyframes for height growth that only moves upward (never negative) */
+@keyframes growUp {
+  0% {
+    height: 10px;
+  }
+  50% {
+    height: var(--max-height);
+  }
+  100% {
+    height: 10px;
+  }
+}
