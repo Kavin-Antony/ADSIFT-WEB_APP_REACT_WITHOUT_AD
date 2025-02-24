@@ -39,15 +39,18 @@
   width: 600px; /* Fixed width */
   height: 80px; /* Fixed height */
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  outline: none;
 }
 
 .controls {
+  outline: none;
   display: flex;
   gap: 10px;
   align-items: center;
 }
 
 .control-btn {
+  outline: none;
   background: none;
   border: none;
   color: white;
@@ -60,9 +63,11 @@
 
 .control-btn:hover {
   color: rgb(255, 0, 0);
+  outline: none;
 }
 
 .play-pause-btn {
+  outline: red;
   background: rgb(255, 0, 0);
   color: white;
   border: none;
@@ -75,17 +80,24 @@
   transition: background 0.3s ease;
 }
 
+.play-pause-btn::after{
+  outline: none;
+}
+
 .play-pause-btn:hover {
   background: rgb(255, 0, 0);
+  outline: none;
 }
 
 .volume-container {
+  outline: none;
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
 .volume-btn {
+  outline: none;
   background: none;
   border: none;
   color: white;
@@ -93,11 +105,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* transition: color 0.3s ease; */
 }
 
 .volume-btn:hover {
   color: rgb(255, 0, 0);
+  outline: none;
 }
+
+.volume-container {
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
 
 .volume-slider {
   -webkit-appearance: none;
@@ -121,32 +144,6 @@
   cursor: pointer;
 }
 
-/* Added Visualizer and Timer Styles */
-.visualizer-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  flex-grow: 1;
-}
-
-.visualizer {
-  display: flex;
-  gap: 5px;
-  height: 50px;
-  align-items: flex-end;
-}
-
-.visualizer .bar {
-  width: 8px;
-  background: linear-gradient(to top, #ff6347, transparent);
-  transition: height 0.1s ease; /* Smooth transition for height changes */
-}
-
-.playback-time {
-  font-size: 14px;
-  color: white;
-}
 button:focus, input:focus {
   outline: none;
 }
