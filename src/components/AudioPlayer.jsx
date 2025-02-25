@@ -21,7 +21,7 @@ const songs = {
   ]
 };
 
-const NUM_BARS = 20; // number of visualizer bars
+const NUM_BARS = 30; // number of visualizer bars
 
 const AudioPlayer = () => {
   const audioRefs = useRef([]);
