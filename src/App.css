@@ -1,3 +1,11 @@
+body, html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #000000 25%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 25%);
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -14,7 +22,7 @@ body {
 
 .audio-player-container {
   width: 100%;
-  background: #000000 transparent;
+  /* background: #000000 transparent; */
   display: flex;
   align-items: center;
   justify-content: center;
