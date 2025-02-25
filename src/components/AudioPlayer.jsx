@@ -36,6 +36,16 @@ const AudioPlayer = () => {
       audio.loop = true;
       audio.muted = index !== currentIndex || isMuted;
       audio.volume = volume;
+      
+      // Set error handling for each audio
+      audio.onerror = () => {
+        console.error(`Error loading ${songs.song_name[index]} (${url}). Skipping station...`);
+        // If the broken station is the current station, move to the next station
+        if (index === currentIndex) {
+          nextStation();
+        }
+      };
+
       return audio;
     });
     // Play all audios (only the active one is unmuted)
@@ -54,13 +64,23 @@ const AudioPlayer = () => {
         audio.src = "";
       });
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [started]);
 
+  // Update audio parameters when currentIndex, volume, or isMuted changes
   useEffect(() => {
     audioRefs.current.forEach((audio, index) => {
       audio.muted = index !== currentIndex || isMuted;
       audio.volume = volume;
     });
+
+    // Check the current audio's network state to auto-skip if there's no source.
+    const currentAudio = audioRefs.current[currentIndex];
+    if (currentAudio && currentAudio.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+      console.warn("No audio source detected, skipping station...");
+      nextStation();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex, volume, isMuted]);
 
   const nextStation = () => {
@@ -73,6 +93,7 @@ const AudioPlayer = () => {
 
   const togglePlayPause = () => {
     const currentAudio = audioRefs.current[currentIndex];
+    if (!currentAudio) return;
     currentAudio.muted = !currentAudio.muted;
     setIsMuted(currentAudio.muted);
   };
@@ -92,14 +113,14 @@ const AudioPlayer = () => {
   // Create an array for visualizer bars with randomized maximum heights and animation delays.
   const visualizerBars = Array.from({ length: NUM_BARS }, (_, index) => {
     const animationDelay = Math.random() * 2; // random delay up to 2s
-    // randomized max height between 50px and 150px, while min height is fixed (say 20px)
+    // randomized max height between 20px and 85px (20 + up to 65)
     const maxHeight = 20 + Math.random() * 65;
     return { animationDelay, maxHeight, key: index };
   });
 
   if (!started) {
     return (
-      <div className="start-screen" onClick={handleStart} style={{cursor: "pointer"}}>
+      <div className="start-screen" onClick={handleStart} style={{ cursor: "pointer" }}>
         <div className="adsift-container">
           <h1 className="adsift-title">ADSIFT</h1>
           <div className="big-play-icon">
