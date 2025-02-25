@@ -210,3 +210,7 @@ button:focus, input:focus {
     height: 10px;
   }
 }
+
+.visualizer.paused .visualizer-bar {
+  animation-play-state: paused;
+}

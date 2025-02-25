@@ -29,6 +29,8 @@ const AudioPlayer = () => {
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(true);
   const [started, setStarted] = useState(false);
+  // state for temporarily pausing visualizer on volume change if needed
+  const [changingVolume, setChangingVolume] = useState(false);
 
   const initializeAudios = () => {
     audioRefs.current = songs.song.map((url, index) => {
@@ -103,7 +105,15 @@ const AudioPlayer = () => {
   };
 
   const handleVolumeChange = (e) => {
-    setVolume(parseFloat(e.target.value));
+    // When the volume is being changed, set the changingVolume flag to true
+    setChangingVolume(true);
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    
+    // For example, remove the flag after a short delay (adjust as needed)
+    setTimeout(() => {
+      setChangingVolume(false);
+    }, 300);
   };
 
   const handleStart = () => {
@@ -131,6 +141,9 @@ const AudioPlayer = () => {
     );
   }
 
+  // Determine if visualizer should animate. If muted (paused) or volume is changing, pause animation.
+  const visualizerAnimationPaused = isMuted || changingVolume;
+
   return (
     <div className="audio-player-wrapper">
       <div className="song-info">
@@ -152,7 +165,7 @@ const AudioPlayer = () => {
         </div>
 
         <div className="visualizer-container">
-          <div className="visualizer">
+          <div className={`visualizer ${visualizerAnimationPaused ? "paused" : ""}`}>
             {visualizerBars.map((bar) => (
               <div 
                 key={bar.key} 
