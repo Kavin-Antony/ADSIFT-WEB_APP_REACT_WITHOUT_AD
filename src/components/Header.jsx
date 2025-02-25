@@ -1,14 +1,14 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { Search } from "lucide-react";
 import "../styles/Header.css";
 
 const Header = () => {
-  const [showInput, setShowInput] = useState(false);
   const inputRef = useRef(null);
 
   const handleClickOutside = (event) => {
     if (inputRef.current && !inputRef.current.contains(event.target)) {
-      setShowInput(false);
+      // Optionally, you can clear the input value or blur the field if needed.
+      inputRef.current.blur();
     }
   };
 
@@ -20,7 +20,6 @@ const Header = () => {
   }, []);
 
   const handleContainerClick = () => {
-    setShowInput(true);
     setTimeout(() => inputRef.current?.focus(), 0);
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Home, Settings, Headphones, LogIn } from "lucide-react";
 import "../styles/Sidebar.css";
 
