@@ -21,7 +21,7 @@ const songs = {
   ]
 };
 
-const NUM_BARS = 30; // number of visualizer bars
+const NUM_BARS = 25; // number of visualizer bars
 
 const AudioPlayer = () => {
   const audioRefs = useRef([]);
@@ -124,7 +124,7 @@ const AudioPlayer = () => {
   const visualizerBars = Array.from({ length: NUM_BARS }, (_, index) => {
     const animationDelay = Math.random() * 2; // random delay up to 2s
     // randomized max height between 20px and 85px (20 + up to 65)
-    const maxHeight = 20 + Math.random() * 65;
+    const maxHeight = 35 + Math.random() * 30;
     return { animationDelay, maxHeight, key: index };
   });
 
