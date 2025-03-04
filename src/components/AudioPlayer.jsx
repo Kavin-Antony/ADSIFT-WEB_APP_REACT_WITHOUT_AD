@@ -5,12 +5,15 @@ import "../styles/AudioPlayer.css";
 const songs = {
   id: [1, 2, 3, 4, 5],
   song: [
-    "https://listen.openstream.co/4428/audio",
+     // "https://listen.openstream.co/4428/audio",
+    "https://centova.aarenworld.com/proxy/894tamilfm/stream",
     // "https://radios.crabdance.com:8002/5",
     "https://www.liveradio.es/http://stream.zeno.fm/ihpr0rqzoxquv",
-    "https://radios.crabdance.com:8002/1",
-    "https://radios.crabdance.com:8002/2",
-    "https://radios.crabdance.com:8002/4",
+    // "https://radios.crabdance.com:8002/1",
+    "https://www.liveradio.es/http://radio.lotustechnologieslk.net:8006/;stream.mp3",
+    // "https://radios.crabdance.com:8002/2",
+    "https://jayamfm-prabak78.radioca.st/stream",
+    "https://radios.crabdance.com:8002/4",  
   ],
   images: ["hfm.png", "rcfm.png", "rmfm.png", "sfm.png", "bigfm.png"],
   song_name: [
