@@ -5,15 +5,11 @@ import "../styles/AudioPlayer.css";
 const songs = {
   id: [1, 2, 3, 4, 5],
   song: [
-     "https://listen.openstream.co/4428/audio",
-    // "https://centova.aarenworld.com/proxy/894tamilfm/stream",
+    "https://listen.openstream.co/4428/audio",
     "https://radios.crabdance.com:8002/5",
-    // "https://www.liveradio.es/http://stream.zeno.fm/ihpr0rqzoxquv",
     "https://radios.crabdance.com:8002/1",
-    // "https://www.liveradio.es/http://radio.lotustechnologieslk.net:8006/;stream.mp3",
     "https://radios.crabdance.com:8002/2",
-    // "https://jayamfm-prabak78.radioca.st/stream",
-    "https://radios.crabdance.com:8002/4",  
+    "https://radios.crabdance.com:8002/4",
   ],
   images: ["hfm.png", "rcfm.png", "rmfm.png", "sfm.png", "bigfm.png"],
   song_name: [
@@ -67,6 +63,36 @@ const AudioPlayer = () => {
       audio.volume = volume;
     });
   }, [currentIndex, volume, isMuted]);
+
+  useEffect(() => {
+    if (!started) return;
+  
+    const interval = setInterval(() => {
+      fetch("https://goshawk-musical-liger.ngrok-free.app/fm", {
+        headers: {
+          "ngrok-skip-browser-warning": "true",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.fm_id?.length > 0) {
+            const fmList = data.fm_id;
+            const currentStationId = songs.id[currentIndex];
+            
+            if (!fmList.includes(currentStationId)) {
+              const firstValidId = fmList[0];
+              const newIndex = songs.id.indexOf(firstValidId);
+              if (newIndex !== -1) {
+                setCurrentIndex(newIndex);
+              }
+            }
+          }
+        })
+        .catch((err) => console.error("FM fetch error:", err));
+    }, 1000);
+  
+    return () => clearInterval(interval);
+  }, [started, currentIndex]);
 
   const nextStation = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % songs.song.length);
