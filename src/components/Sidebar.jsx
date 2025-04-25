@@ -30,7 +30,7 @@ const Sidebar = () => {
         </button>
         <button className="sign-in-btn">
           <LogIn size={24} />
-          {isOpen && <span>Sign In</span>}
+          {isOpen && <span>Sign Out</span>}
         </button>
       </div>
     </div>
