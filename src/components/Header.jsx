@@ -22,9 +22,7 @@ const Header = () => {
   const handleContainerClick = () => {
     setTimeout(() => inputRef.current?.focus(), 0);
   };
-const handleClick_AD = () => {
-  window.location.href = "https://kavin-antony.github.io/ADSIFT-WEB_APP_REACT_WITH_AD/";
-}
+
   return (
     <div className="header">
       <div className="search-container" onClick={handleContainerClick}>
@@ -39,7 +37,7 @@ const handleClick_AD = () => {
         />
       </div>
       <div className="profile-icon">
-        <img src="./profile.png" alt="Profile" className="profile-img" onClick={handleClick_AD}/>
+        <img src="./profile.png" alt="Profile" className="profile-img" />
       </div>
     </div>
   );

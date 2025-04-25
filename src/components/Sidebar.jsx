@@ -4,7 +4,9 @@ import "../styles/Sidebar.css";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const handleClick_AD = () => {
+    window.location.href = "https://kavin-antony.github.io/ADSIFT-WEB_APP_REACT_WITH_AD/";
+  }
   return (
     <div className={`sidebar ${isOpen ? "open" : "closed"}`}>
       {/* Logo Section */}
@@ -22,9 +24,9 @@ const Sidebar = () => {
           <Settings size={24} />
           {isOpen && <span>Preferences</span>}
         </button>
-        <button className="sidebar-btn">
+        <button className="sidebar-btn" onClick={handleClick_AD}>
           <Headphones size={24} />
-          {isOpen && <span>Ad-Free Listening</span>}
+          {isOpen && <span>Ad-Listening</span>}
         </button>
         <button className="sign-in-btn">
           <LogIn size={24} />
