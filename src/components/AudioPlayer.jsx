@@ -122,8 +122,17 @@ const AudioPlayer = () => {
   };
 
   const handleStart = () => {
+  audioRefs.current.forEach((audio) => {
+    audio.pause();
+  });
+
+  setTimeout(() => {
+    audioRefs.current.forEach((audio) => {
+      audio.play().catch(() => {});
+    });
     setStarted(true);
-  };
+  }, 3000);
+};
 
   const visualizerBars = Array.from({ length: NUM_BARS }, (_, index) => {
     const animationDelay = Math.random() * 2;
